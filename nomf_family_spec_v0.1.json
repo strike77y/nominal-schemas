@@ -1,5 +1,5 @@
 {
-  "$id": "https://yourdomain.com/schemas/family_spec.json",
+  "$id": "https://raw.githubusercontent.com/strike77y/nominal-schemas/refs/heads/main/nomf_family_spec_v0.1.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "FamilySpec",
   "type": "object",
@@ -230,4 +230,5 @@
   },
 
   "additionalProperties": false
+
 }
