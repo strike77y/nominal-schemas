@@ -1,0 +1,233 @@
+{
+  "$id": "https://yourdomain.com/schemas/family_spec.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FamilySpec",
+  "type": "object",
+  "required": ["manufacturer", "product_family", "family_slug", "category", "ordering_code", "performance_model"],
+  "properties": {
+    "manufacturer": { "type": "string", "minLength": 1 },
+    "brand": { "type": "string" },
+    "product_family": { "type": "string", "minLength": 1 },
+    "family_slug": { "type": "string", "minLength": 1 },
+    "category": { "type": "string" },
+
+    "doc_urls": {
+      "type": "object",
+      "properties": {
+        "cutsheet_url": { "type": "string", "format": "uri" },
+        "catalog_url": { "type": "string", "format": "uri" },
+        "bim_url": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": false
+    },
+
+    "ordering_code": {
+      "type": "object",
+      "required": ["pattern", "tokens"],
+      "properties": {
+        "pattern": { "type": "string" },
+        "separator": { "type": "string", "default": "-" },
+        "tokens": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": ["codes"],
+            "properties": {
+              "required": { "type": "boolean", "default": true },
+              "mode": {
+                "type": "string",
+                "enum": ["fixed", "selectable", "tunable", "warm_dim", "list", "freeform"],
+                "default": "fixed"
+              },
+              "codes": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": ["string", "number", "object", "boolean", "null"]
+                }
+              },
+              "aliases": {
+                "type": "object",
+                "additionalProperties": { "type": "string" }
+              },
+              "default": { "type": "string" },
+              "description": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "cct_mode": {
+      "type": "string",
+      "enum": ["fixed", "selectable", "tunable", "warm_dim"],
+      "default": "fixed"
+    },
+    "cct": { "type": "string" },
+
+    "performance_model": {
+      "type": "object",
+      "required": ["by_lumen_pkg"],
+      "properties": {
+        "base_point": {
+          "type": "object",
+          "properties": {
+            "cct": { "type": "string" },
+            "cri": { "type": "integer" }
+          },
+          "additionalProperties": false
+        },
+        "by_lumen_pkg": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": ["lumens_nominal", "wattage_input"],
+            "properties": {
+              "lumens_nominal": { "type": "number" },
+              "wattage_input": { "type": "number" },
+              "ies_file_url": { "type": "string", "format": "uri" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "by_cct": {
+          "description": "Either multipliers OR explicit points. Prefer points for selectable/tunable.",
+          "type": "object",
+          "properties": {
+            "points": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "lm_mult": { "type": "number" },
+                  "w_mult": { "type": "number" },
+                  "lumens_nominal": { "type": "number" },
+                  "wattage_input": { "type": "number" },
+                  "ies_file_url": { "type": "string", "format": "uri" }
+                },
+                "additionalProperties": false
+              }
+            },
+            "interpolation": {
+              "type": "string",
+              "enum": ["none", "linear"],
+              "default": "linear"
+            }
+          },
+          "additionalProperties": false
+        },
+        "option_deltas": {
+          "type": "object",
+          "description": "Keyed by token:value, e.g. 'cri:90', 'driver:DALI'",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "lm_mult": { "type": "number" },
+              "w_mult": { "type": "number" },
+              "lm_add": { "type": "number" },
+              "w_add": { "type": "number" },
+              "dim_floor": { "type": "string" },
+              "notes": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "capability_envelope": {
+      "type": "object",
+      "properties": {
+        "tunable_lumen_range": {
+          "type": "object",
+          "properties": {
+            "min_lm": { "type": "number" },
+            "max_lm": { "type": "number" },
+            "step": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "driver_options": { "type": "array", "items": { "type": "string" } },
+        "dimming_floor_capabilities": { "type": "object", "additionalProperties": { "type": "string" } },
+        "beam_options_deg": { "type": "array", "items": { "type": "number" } },
+        "factory_mod_classes_supported": { "type": "array", "items": { "type": "string" } },
+        "mod_cost_multipliers": { "type": "object", "additionalProperties": { "type": "number" } },
+        "mod_leadtime_adder_days": { "type": "object", "additionalProperties": { "type": "integer" } }
+      },
+      "additionalProperties": false
+    },
+
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "id": { "type": "string" },
+          "severity": { "type": "string", "enum": ["block", "warn"], "default": "block" },
+          "type": { "type": "string", "enum": ["requires", "excludes", "mutex", "one_of", "implies", "depends_on_value_range", "custom"] },
+          "if": { "$ref": "#/$defs/selector" },
+          "then": { "$ref": "#/$defs/selector" },
+          "a": { "$ref": "#/$defs/selector" },
+          "b": { "$ref": "#/$defs/selector" },
+          "group": { "type": "array", "items": { "type": "string" } },
+          "range": {
+            "type": "object",
+            "properties": {
+              "token": { "type": "string" },
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "inclusive": { "type": "boolean", "default": true }
+            },
+            "additionalProperties": false
+          },
+          "predicate": { "type": "string" },
+          "message": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    
+    "app_directives": {
+      "type": "object",
+      "description": "A flexible key-value store for application-specific instructions or metadata.",
+      "additionalProperties": true
+    },
+
+    "listings_defaults": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "meta": {
+      "type": "object",
+      "properties": {
+        "last_updated_utc": { "type": "string", "format": "date-time" },
+        "provenance": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+
+  "$defs": {
+    "selector": {
+      "type": "object",
+      "description": "Match on token values. Arrays mean OR semantics.",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "number" },
+          { "type": "boolean" },
+          { "type": "array", "items": { "type": ["string", "number", "boolean"] } }
+        ]
+      }
+    }
+  },
+
+  "additionalProperties": false
+}
