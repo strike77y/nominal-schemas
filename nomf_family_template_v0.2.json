@@ -154,7 +154,7 @@
       },
       "additionalProperties": false
     }
-  },
+},
 
     "ordering_code": {
       "type": "object",
