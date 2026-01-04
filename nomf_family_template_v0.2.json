@@ -1,0 +1,367 @@
+{
+  "$id": "https://raw.githubusercontent.com/strike77y/nominal-schemas/refs/heads/main/nomf_family_template_v0.2.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "nomfFamilyTemplate",
+  "type": "object",
+  "required": ["manufacturer", "product_family", "family_slug", "category", "physical_properties", "ordering_code", "performance_model"],
+  "properties": {
+    "manufacturer": { "type": "string", "minLength": 1 },
+    "brand": { "type": "string" },
+    "product_family": { "type": "string", "minLength": 1 },
+    "family_slug": { "type": "string", "minLength": 1 },
+    "category": { "type": "string" },
+
+"doc_urls": {
+      "type": "object",
+      "properties": {
+        "cutsheet_url": { "type": "string", "format": "uri" },
+        "catalog_url": { "type": "string", "format": "uri" },
+        "bim_url": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": false
+    },
+
+"physical_properties": {
+  "type": "object",
+  "properties": {
+    "dimensions": {
+      "type": "object",
+      "properties": {
+        "overall": {
+          "type": "object",
+          "properties": {
+            "length": { "type": "number" },
+            "width": { "type": "number" },
+            "height": { "type": "number" },
+            "diameter": { "type": "number" },
+            "unit": { "type": "string", "default": "inches" }
+          }
+        },
+        "mounting_accessories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "option_name": { "type": "string" },
+              "size_value": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "nominal": {
+          "type": "object",
+          "description": "Aperture size, cylinder diameter, or fixture body height only.",
+          "properties": {
+            "aperture_size": { "type": "number" },
+            "diameter": { "type": "number" },
+            "body_height_only": { "type": "number" },
+            "shape_aspect": { "type": "string" }
+          }
+        },
+        "cutout": {
+          "type": "object",
+          "properties": {
+            "dimensions": { "type": "string" },
+            "is_circular": { "type": "boolean" },
+            "diameter": { "type": "number" }
+          }
+        },
+        "clearance_requirements": { "type": "string" },
+        "max_run_length": { "type": "number" }
+      }
+    },
+    "shape": {
+      "type": "string",
+      "enum": [
+        "round", "square", "rectangular", "linear", "hexagonal", 
+        "triangular", "oval", "cylindrical", "conical", "spherical", "custom"
+      ]
+    },
+    "weight": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "type": "string", "default": "lbs" }
+      }
+    },
+    "mounting_type": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["recessed", "surface", "pendant", "wall_mount", "track", "monopoint", "pole", "bollard"]
+      }
+    },
+    "environment_rating": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "dry", "damp", "wet", 
+          "sauna", "shower", "deadfront", "steam_room", 
+          "natatorium", "marine_grade"
+        ]
+      }
+    },
+    "ip_rating": { "type": "string", "pattern": "^IP[0-9]{2}$" },
+    "ik_rating": { "type": "string", "pattern": "^IK[0-9]{2}$" },
+    "operating_temp_range": {
+      "type": "object",
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "unit": { "type": "string", "enum": ["C", "F"], "default": "C" }
+      }
+    },
+    "plenum_rating": {
+      "type": "string",
+      "enum": ["non_ic", "ic_rated", "chicago_plenum", "not_applicable"]
+    },
+    "longevity_data": {
+      "type": "object",
+      "description": "LM-70 and TM-21-19 projected life data based on thermal testing.",
+      "properties": {
+        "standards_compliance": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["TM-21-11", "TM-21-19", "LM-70", "LM-80"] }
+        },
+        "projections": {
+          "type": "array",
+          "description": "Life projections at specific ambient temperatures.",
+          "items": {
+            "type": "object",
+            "required": ["ambient_temp_c", "l_rating", "hours"],
+            "properties": {
+              "ambient_temp_c": { "type": "integer" },
+              "l_rating": { 
+                "type": "integer", 
+                "description": "The percentage of initial light output (e.g., 70, 85, 90)." 
+              },
+              "hours": { "type": "integer" },
+              "is_reported": { 
+                "type": "boolean", 
+                "description": "True if limited by 6x test duration rule; False if mathematically projected." 
+              },
+              "symbol": { 
+                "type": "string", 
+                "enum": [">", "=", "<"],
+                "default": ">"
+              }
+            }
+          }
+        },
+        "interpolation_supported": { "type": "boolean", "default": false },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "ordering_code": {
+      "type": "object",
+      "required": ["pattern", "tokens"],
+      "properties": {
+        "pattern": { "type": "string" },
+        "separator": { "type": "string", "default": "-" },
+        "tokens": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": ["codes"],
+            "properties": {
+              "required": { "type": "boolean", "default": true },
+              "mode": {
+                "type": "string",
+                "enum": ["fixed", "selectable", "tunable", "warm_dim", "list", "freeform"],
+                "default": "fixed"
+              },
+              "codes": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": ["string", "number", "object", "boolean", "null"]
+                }
+              },
+              "aliases": {
+                "type": "object",
+                "additionalProperties": { "type": "string" }
+              },
+              "default": { "type": "string" },
+              "description": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "cct_mode": {
+      "type": "string",
+      "enum": ["fixed", "selectable", "tunable", "warm_dim"],
+      "default": "fixed"
+    },
+    "cct": { "type": "string" },
+
+    "performance_model": {
+      "type": "object",
+      "required": ["by_lumen_pkg"],
+      "properties": {
+        "base_point": {
+          "type": "object",
+          "properties": {
+            "cct": { "type": "string" },
+            "cri": { "type": "integer" }
+          },
+          "additionalProperties": false
+        },
+        "by_lumen_pkg": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": ["lumens_nominal", "wattage_input"],
+            "properties": {
+              "lumens_nominal": { "type": "number" },
+              "wattage_input": { "type": "number" },
+              "ies_file_url": { "type": "string", "format": "uri" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "by_cct": {
+          "description": "Either multipliers OR explicit points. Prefer points for selectable/tunable.",
+          "type": "object",
+          "properties": {
+            "points": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "lm_mult": { "type": "number" },
+                  "w_mult": { "type": "number" },
+                  "lumens_nominal": { "type": "number" },
+                  "wattage_input": { "type": "number" },
+                  "ies_file_url": { "type": "string", "format": "uri" }
+                },
+                "additionalProperties": false
+              }
+            },
+            "interpolation": {
+              "type": "string",
+              "enum": ["none", "linear"],
+              "default": "linear"
+            }
+          },
+          "additionalProperties": false
+        },
+        "option_deltas": {
+          "type": "object",
+          "description": "Keyed by token:value, e.g. 'cri:90', 'driver:DALI'",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "lm_mult": { "type": "number" },
+              "w_mult": { "type": "number" },
+              "lm_add": { "type": "number" },
+              "w_add": { "type": "number" },
+              "dim_floor": { "type": "string" },
+              "notes": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "capability_envelope": {
+      "type": "object",
+      "properties": {
+        "tunable_lumen_range": {
+          "type": "object",
+          "properties": {
+            "min_lm": { "type": "number" },
+            "max_lm": { "type": "number" },
+            "step": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "driver_options": { "type": "array", "items": { "type": "string" } },
+        "dimming_floor_capabilities": { "type": "object", "additionalProperties": { "type": "string" } },
+        "beam_options_deg": { "type": "array", "items": { "type": "number" } },
+        "factory_mod_classes_supported": { "type": "array", "items": { "type": "string" } },
+        "mod_cost_multipliers": { "type": "object", "additionalProperties": { "type": "number" } },
+        "mod_leadtime_adder_days": { "type": "object", "additionalProperties": { "type": "integer" } }
+      },
+      "additionalProperties": false
+    },
+
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "id": { "type": "string" },
+          "severity": { "type": "string", "enum": ["block", "warn"], "default": "block" },
+          "type": { "type": "string", "enum": ["requires", "excludes", "mutex", "one_of", "implies", "depends_on_value_range", "custom"] },
+          "if": { "$ref": "#/$defs/selector" },
+          "then": { "$ref": "#/$defs/selector" },
+          "a": { "$ref": "#/$defs/selector" },
+          "b": { "$ref": "#/$defs/selector" },
+          "group": { "type": "array", "items": { "type": "string" } },
+          "range": {
+            "type": "object",
+            "properties": {
+              "token": { "type": "string" },
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "inclusive": { "type": "boolean", "default": true }
+            },
+            "additionalProperties": false
+          },
+          "predicate": { "type": "string" },
+          "message": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    
+    "app_directives": {
+      "type": "object",
+      "description": "A flexible key-value store for application-specific instructions or metadata.",
+      "additionalProperties": true
+    },
+
+    "listings_defaults": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "meta": {
+      "type": "object",
+      "properties": {
+        "last_updated_utc": { "type": "string", "format": "date-time" },
+        "provenance": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+
+  "$defs": {
+    "selector": {
+      "type": "object",
+      "description": "Match on token values. Arrays mean OR semantics.",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "number" },
+          { "type": "boolean" },
+          { "type": "array", "items": { "type": ["string", "number", "boolean"] } }
+        ]
+      }
+    }
+  },
+
+  "additionalProperties": false
+}
