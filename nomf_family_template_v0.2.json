@@ -151,9 +151,9 @@
         },
         "interpolation_supported": { "type": "boolean", "default": false },
         "notes": { "type": "string" }
-      },
+      }},
       "additionalProperties": false
-    }}},
+    }},
 
     "ordering_code": {
       "type": "object",
