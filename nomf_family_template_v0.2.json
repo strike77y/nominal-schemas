@@ -153,10 +153,8 @@
         "notes": { "type": "string" }
       },
       "additionalProperties": false
-    
-  }
-        
-    },
+    }
+  },
 
     "ordering_code": {
       "type": "object",
