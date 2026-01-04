@@ -153,8 +153,8 @@
         "notes": { "type": "string" }
       },
       "additionalProperties": false
-    }
-  },
+    
+  }
         
     },
 
