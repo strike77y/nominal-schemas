@@ -1,0 +1,323 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/strike77y/nominal-schemas/main/nomg_gestalt_v0.2.schema.json",
+  "title": "NOMG Gestalt Layer Schema v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "identity", "fingerprint", "gestalt", "search_surface", "meta"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "nomg_gestalt_v0.2"
+    },
+
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manufacturer", "brand", "product_family", "family_slug", "category", "nomf_ref"],
+      "properties": {
+        "manufacturer": { "type": ["string", "null"] },
+        "brand": { "type": ["string", "null"] },
+        "product_family": { "type": ["string", "null"] },
+        "family_slug": { "type": ["string", "null"] },
+        "category": { "type": ["string", "null"], "description": "Broad fixture category label; may be free text." },
+        "nomf_ref": {
+          "type": ["string", "null"],
+          "description": "Join key to NOMF (family_id, slug, or stable reference)."
+        }
+      }
+    },
+
+    "fingerprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "scale", "axes"],
+      "properties": {
+        "version": { "type": "string", "description": "Fingerprint set version (e.g., axes_v1)." },
+        "scale": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["min", "max"],
+          "properties": {
+            "min": { "type": "integer" },
+            "max": { "type": "integer" },
+            "meaning": { "type": ["string", "null"] }
+          }
+        },
+        "axes": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The canonical scored axes. Add/remove keys only by schema revision.",
+          "required": [
+            "UGR",
+            "trimDetail",
+            "dimmingCurve",
+            "controlsIntegration",
+            "antiLigature",
+            "ikRating",
+            "sealing",
+            "circadianMetrics",
+            "aestheticImpact",
+            "customization",
+            "brandAlignment",
+            "cost",
+            "beamUniformity",
+            "verticalIlluminance",
+            "highCRI_R9",
+            "zeroUV_IR",
+            "beamShapingAccessories",
+            "campusSafety",
+            "vandalResistance",
+            "bugRating",
+            "ip67",
+            "grazingOptics",
+            "warranty",
+            "corrosionResistance"
+          ],
+          "properties": {
+            "UGR": { "$ref": "#/$defs/axisScore" },
+            "trimDetail": { "$ref": "#/$defs/axisScore" },
+            "dimmingCurve": { "$ref": "#/$defs/axisScore" },
+            "controlsIntegration": { "$ref": "#/$defs/axisScore" },
+            "antiLigature": { "$ref": "#/$defs/axisScore" },
+            "ikRating": { "$ref": "#/$defs/axisScore" },
+            "sealing": { "$ref": "#/$defs/axisScore" },
+            "circadianMetrics": { "$ref": "#/$defs/axisScore" },
+            "aestheticImpact": { "$ref": "#/$defs/axisScore" },
+            "customization": { "$ref": "#/$defs/axisScore" },
+            "brandAlignment": { "$ref": "#/$defs/axisScore" },
+            "cost": { "$ref": "#/$defs/axisScore" },
+            "beamUniformity": { "$ref": "#/$defs/axisScore" },
+            "verticalIlluminance": { "$ref": "#/$defs/axisScore" },
+            "highCRI_R9": { "$ref": "#/$defs/axisScore" },
+            "zeroUV_IR": { "$ref": "#/$defs/axisScore" },
+            "beamShapingAccessories": { "$ref": "#/$defs/axisScore" },
+            "campusSafety": { "$ref": "#/$defs/axisScore" },
+            "vandalResistance": { "$ref": "#/$defs/axisScore" },
+            "bugRating": { "$ref": "#/$defs/axisScore" },
+            "ip67": { "$ref": "#/$defs/axisScore" },
+            "grazingOptics": { "$ref": "#/$defs/axisScore" },
+            "warranty": { "$ref": "#/$defs/axisScore" },
+            "corrosionResistance": { "$ref": "#/$defs/axisScore" }
+          }
+        }
+      }
+    },
+
+    "gestalt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "light_posture",
+        "form_articulation",
+        "character_axes",
+        "design_intent",
+        "application_character"
+      ],
+      "properties": {
+        "light_posture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["beam_type", "shadow_quality", "source_visibility", "contrast_style", "emotional_register"],
+          "properties": {
+            "beam_type": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'soft glow field', 'hard-edge beam', 'batwing roadway distribution', 'layered halo'."
+            },
+            "shadow_quality": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'graphic', 'diffuse', 'forgiving', 'high-contrast'."
+            },
+            "source_visibility": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'exposed', 'shielded', 'deeply recessed', 'glowing diffuser'."
+            },
+            "contrast_style": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'hierarchy-building', 'uniform field', 'pooling', 'civic wash'."
+            },
+            "emotional_register": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'hospitality-warm', 'technical', 'calm', 'dramatic', 'civic'."
+            }
+          }
+        },
+
+        "form_articulation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "primary_geometry",
+            "structural_elements",
+            "surface_character",
+            "visual_mass",
+            "architectural_presence"
+          ],
+          "properties": {
+            "primary_geometry": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'cylinder', 'disc', 'shoebox', 'cobra-head', 'ring + diffuser', 'round backplate + arms'."
+            },
+            "structural_elements": {
+              "type": "array",
+              "items": { "type": "string" },
+              "maxItems": 24,
+              "description": "Discrete articulation tokens: e.g., 'two arms', 'perforated shade', 'reveal line', 'yoke', 'side cables', 'backplate', 'visor'."
+            },
+            "surface_character": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'smooth', 'perforated', 'textured', 'layered', 'ribbed', 'machined'."
+            },
+            "visual_mass": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'slender', 'dense', 'jewelry-like', 'infrastructural', 'lightweight'."
+            },
+            "architectural_presence": {
+              "type": ["string", "null"],
+              "description": "Short phrase: e.g., 'recedes', 'punctuates', 'object-forward', 'background infrastructure'."
+            }
+          }
+        },
+
+        "character_axes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "decorative_vs_instrumental",
+            "civic_vs_intimate",
+            "soft_glow_vs_sharp_beam",
+            "expressive_vs_reserved",
+            "object_vs_architecture",
+            "emotional_warmth_vs_technical_cool"
+          ],
+          "properties": {
+            "decorative_vs_instrumental": { "$ref": "#/$defs/axisLabel" },
+            "civic_vs_intimate": { "$ref": "#/$defs/axisLabel" },
+            "soft_glow_vs_sharp_beam": { "$ref": "#/$defs/axisLabel" },
+            "expressive_vs_reserved": { "$ref": "#/$defs/axisLabel" },
+            "object_vs_architecture": { "$ref": "#/$defs/axisLabel" },
+            "emotional_warmth_vs_technical_cool": { "$ref": "#/$defs/axisLabel" }
+          }
+        },
+
+        "design_intent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["construction_logic", "optimization_focus", "accepted_tradeoffs", "ecosystem_role"],
+          "properties": {
+            "construction_logic": {
+              "type": ["string", "null"],
+              "description": "One or two sentences max. How it seems built/organized (engineered tool vs sculptural object; accessory-driven vs integrated)."
+            },
+            "optimization_focus": {
+              "type": ["string", "null"],
+              "description": "Short statement of what it appears to optimize for."
+            },
+            "accepted_tradeoffs": {
+              "type": ["string", "null"],
+              "description": "Short statement of what it appears to de-prioritize; avoid spec lists."
+            },
+            "ecosystem_role": {
+              "type": ["string", "null"],
+              "description": "Short statement: e.g., 'accent instrument', 'ambient layer', 'roadway distribution tool', 'decorative object light'."
+            }
+          }
+        },
+
+        "application_character": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["excels_in", "supports", "misplaced_in"],
+          "properties": {
+            "excels_in": {
+              "type": "array",
+              "items": { "type": "string" },
+              "maxItems": 12
+            },
+            "supports": {
+              "type": "array",
+              "items": { "type": "string" },
+              "maxItems": 12
+            },
+            "misplaced_in": {
+              "type": "array",
+              "items": { "type": "string" },
+              "maxItems": 12
+            }
+          }
+        },
+
+        "narrative": {
+          "type": ["string", "null"],
+          "description": "Optional. If present, keep under ~250-350 words. Use as an internal designer briefing; no specs or ordering logic."
+        }
+      }
+    },
+
+    "search_surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["designer_tags", "human_tags", "problem_statements"],
+      "properties": {
+        "designer_tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 24,
+          "description": "Design-intent vocabulary: e.g., 'layered glow', 'reductionist', 'civic distribution', 'graphic shadow'."
+        },
+        "human_tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 24,
+          "description": "Fuzzy inquiry vocabulary: e.g., 'glowy bottom', 'two arms', 'round wall light', 'street light head', 'soft warm modern'."
+        },
+        "problem_statements": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 12,
+          "description": "Short natural-language intents the fixture solves."
+        }
+      }
+    },
+
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["last_updated_utc", "provenance"],
+      "properties": {
+        "last_updated_utc": {
+          "type": ["string", "null"],
+          "description": "ISO-8601 UTC timestamp",
+          "pattern": "^(|\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z)$"
+        },
+        "provenance": {
+          "type": ["string", "null"],
+          "description": "What source material produced this NOMG."
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "axisScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "justification"],
+      "properties": {
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 99
+        },
+        "justification": {
+          "type": ["string", "null"],
+          "description": "Short justification. Keep it grounded; avoid spec dumps."
+        }
+      }
+    },
+    "axisLabel": {
+      "type": ["string", "null"],
+      "description": "Short qualitative placement on the axis (e.g., 'mostly instrumental', 'balanced', 'strongly decorative')."
+    }
+  }
+}
