@@ -6,7 +6,7 @@ This public repository holds [Nominal](https://nominal.lighting) lighting data s
 
 **Ordinary fixture-bundle link:** \`https://nominal.lighting/b/7QY7IF\` (a real example collection)
 
-**Remote MCP connector:** \`https://nominal.lighting/mcp\`
+**Remote MCP connector:** \`https://nominal.lighting/mcp/public\`
 
 **Public plugin package and installation instructions:** [Nominal Lighting plugin](plugins/nominal/README.md)
 
@@ -14,7 +14,7 @@ The connector exposes product discovery, evidence-backed NOMF configuration, ind
 
 ### Claude
 
-Use **Customize → Connectors → Add → Custom → Web** (wording varies by client), name it "Nominal", enter \`https://nominal.lighting/mcp\`, and choose **No sign in** if offered. Approve and enable the connector in the conversation. If the site cannot be fetched, this integration is the alternative—not a second type of bundle link.
+Use **Customize → Connectors → Add → Custom → Web** (wording varies by client), name it "Nominal", enter \`https://nominal.lighting/mcp/public\`, and choose **No sign in** if offered. Approve and enable the connector in the conversation. If the site cannot be fetched, this integration is the alternative—not a second type of bundle link.
 
 For Claude Code plugin marketplace installation, this repository has [.claude-plugin/marketplace.json](.claude-plugin/marketplace.json) and a full plugin at [plugins/nominal](plugins/nominal). That is separate from publication in the Claude-wide directory.
 
@@ -23,3 +23,5 @@ For Claude Code plugin marketplace installation, this repository has [.claude-pl
 The same server is described by an [official MCP registry server.json](server.json), ready to publish after GitHub namespace authentication, and by [the Nominal OpenAPI document](https://nominal.lighting/openapi.json).
 
 **Important:** Putting a plugin in a public repository does not automatically install it, force Claude to recognize a URL, or grant it network access. Inclusion in Claude's directory requires a separate submission and approval at https://claude.ai/directory/manage . Until directory listing, users must explicitly connect the URL.
+
+For initial Claude Directory submission, use the **read-only** `/mcp/public` endpoint; the existing advanced `/mcp` remains supported separately.
