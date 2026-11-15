@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "nominal": {
+      "type": "http",
+      "url": "https://nominal.lighting/mcp"
+    }
+  }
+}

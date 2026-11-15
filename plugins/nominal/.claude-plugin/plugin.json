@@ -1,0 +1,20 @@
+{
+  "name": "nominal-lighting",
+  "version": "0.1.0",
+  "description": "Work with lighting fixture schedules, manufacturer documents, NOMF evidence, configurations and shared Nominal bundles.",
+  "author": {
+    "name": "Nominal",
+    "url": "https://nominal.lighting"
+  },
+  "homepage": "https://nominal.lighting",
+  "repository": "https://github.com/strike77y/nominal-schemas",
+  "license": "MIT",
+  "keywords": [
+    "lighting",
+    "fixture schedule",
+    "NOMF",
+    "photometry",
+    "Revit",
+    "manufacturers"
+  ]
+}
