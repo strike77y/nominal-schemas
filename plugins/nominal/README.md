@@ -2,13 +2,13 @@
 
 Public source for the **Nominal Lighting** Claude plugin and remote MCP connector.
 
-**MCP endpoint:** https://nominal.lighting/mcp
+**MCP endpoint:** https://nominal.lighting/mcp/public
 
 This plugin contains the lightweight instructions and remote MCP connection metadata, not Nominal's private application code or any user bundle data.
 
 ## Claude / Cowork / Claude Desktop
 
-To add the public remote MCP directly, use **Customize → Connectors → Add → Custom → Web**, set the name to **Nominal**, URL to **https://nominal.lighting/mcp**, choose **No sign in** (for public access), review the requested tools, and enable it in the conversation. The client must be able to reach the endpoint from Anthropic's cloud.
+To add the public remote MCP directly, use **Customize → Connectors → Add → Custom → Web**, set the name to **Nominal**, URL to **https://nominal.lighting/mcp/public**, choose **No sign in** (for public access), review the requested tools, and enable it in the conversation. The client must be able to reach the endpoint from Anthropic's cloud.
 
 To request inclusion in Claude's directory, the owner submits this plugin or the single MCP endpoint using [Claude's submission portal](https://claude.ai/directory/manage). A directory listing requires approval; the presence of this repository is **not** a listing.
 

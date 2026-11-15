@@ -2,7 +2,7 @@
   "mcpServers": {
     "nominal": {
       "type": "http",
-      "url": "https://nominal.lighting/mcp"
+      "url": "https://nominal.lighting/mcp/public"
     }
   }
 }
