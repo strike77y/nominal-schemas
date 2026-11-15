@@ -24,4 +24,4 @@ The same server is described by an [official MCP registry server.json](server.js
 
 **Important:** Putting a plugin in a public repository does not automatically install it, force Claude to recognize a URL, or grant it network access. Inclusion in Claude's directory requires a separate submission and approval at https://claude.ai/directory/manage . Until directory listing, users must explicitly connect the URL.
 
-For initial Claude Directory submission, use the **read-only** `/mcp/public` endpoint; the existing advanced `/mcp` remains supported separately.
+For Claude Directory submission, use the **read-and-write** `/mcp/public` connector. Its 23 public tools can stage NOMF knowledge contributions and publish user-approved bundles but cannot approve claims, edit canonical NOMFs or perform owner/worker administrative operations. The existing advanced `/mcp` remains supported separately.
