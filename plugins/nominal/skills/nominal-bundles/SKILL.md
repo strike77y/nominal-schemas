@@ -15,7 +15,7 @@ The ordinary bundle link remains the only shared link; there is no special AI li
 
 ## Live NOMF v0.3 schema
 
-Before creating or submitting a **complete NOMF**, call the public `get_nomf_schema` MCP tool or read the MCP resource `nominal://schema/nomf/v0.3`. If the connector is unavailable but HTTP browsing is supported, fetch `https://nominal.lighting/schemas/nomf/v0.3.json` (also `/api/v1/schema`). The schema is retrieved from the current `nominal-schemas` main branch on every call. Never embed, assume, or reuse a stale copy. If the live schema cannot be reached, leave the full NOMF unresolved rather than guessing its shape.
+Before creating or submitting a **complete NOMF**, call the public `get_nomf_schema` MCP tool or read the MCP resource `nominal://schema/nomf/v0.3`. If the connector is unavailable but HTTP browsing is supported, fetch `https://nominal.lighting/schemas/nomf/v0.3.json` (also `/api/v1/schema`). The schema is served directly from the versioned Nominal Lighting deployment and is independent of this repository. Licensing details: https://nominal.lighting/legal/specification-license. Never embed, assume, or reuse a stale copy. If the live schema cannot be reached, leave the full NOMF unresolved rather than guessing its shape.
 
 ## Selection context (no separate questionnaire)
 
