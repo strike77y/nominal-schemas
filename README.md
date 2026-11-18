@@ -36,4 +36,4 @@ Installing an agent skill does not itself install or authorize the remote MCP co
 
 ## Specification licensing
 
-NOMF v0.3 is a proprietary, Nominal-maintained specification. The official published file is at https://nominal.lighting/schemas/nomf/v0.3.json; read the [proposed specification license](https://nominal.lighting/legal/specification-license). The site license document is marked as a legal-review draft until the legal owner and acceptance mechanism are finalized.
+NOMF v0.3 is a proprietary, Nominal-maintained specification. The official published file is at https://nominal.lighting/schemas/nomf/v0.3.json; read the [Nominal Proprietary Specification & Implementation License](https://nominal.lighting/legal/specification-license). The currently published license is NPSIL 1.0, effective November 18, 2026.
