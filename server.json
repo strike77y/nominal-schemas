@@ -4,14 +4,11 @@
   "title": "Nominal Lighting",
   "description": "Discover lighting products, build fixture bundles, and contribute evidence-backed NOMF research.",
   "version": "0.1.0",
-  "repository": {
-    "url": "https://github.com/strike77y/nominal-schemas",
-    "source": "github"
-  },
   "remotes": [
     {
       "type": "streamable-http",
       "url": "https://nominal.lighting/mcp/public"
     }
-  ]
+  ],
+  "websiteUrl": "https://nominal.lighting/docs"
 }

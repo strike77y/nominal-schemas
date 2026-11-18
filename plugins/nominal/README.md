@@ -17,7 +17,7 @@ Choose **Customize → Connectors → Add → Custom → Web**, enter **Nominal*
 Install from this public GitHub marketplace:
 
 ```text
-/plugin marketplace add strike77y/nominal-schemas
+Download the current plugin from https://nominal.lighting/skills (the GitHub marketplace path is legacy and may become private)
 /plugin install nominal-lighting@nominal-lighting-plugins
 ```
 
@@ -26,3 +26,8 @@ Installation requires user approval. No special AI version of a bundle link is n
 ## Technical behavior
 
 For an existing bundle, use `get_bundle_outline` first, `get_fixture_fact` for narrow technical claims, and `get_fixture_assets` for linked documents. Leave unknown values unknown. Before generating complete NOMFs, retrieve the live schema; source-backed contributions are subject to separate verification. Publishing new bundles requires user approval; existing shared codes do not provide edit authority.
+
+
+**NOMF proprietary specification license:** https://nominal.lighting/legal/specification-license
+
+The official schema is served by Nominal Lighting; this repository is not an authoritative runtime source.
