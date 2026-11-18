@@ -3,6 +3,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$comment": "Copyright (c) 2026 Nominal Lighting. All rights reserved. License information: https://nominal.lighting/legal/specification-license",
   "x-nominal-license-url": "https://nominal.lighting/legal/specification-license",
+  "x-nominal-license-id": "NPSIL-1.0",
   "title": "nomfFamilyTemplate-v0.3",
   "type": "object",
   "required": [
