@@ -1,6 +1,8 @@
 {
-  "$id": "https://raw.githubusercontent.com/strike77y/nominal-schemas/refs/heads/main/nomf_family_template_v0.3.json",
+  "$id": "https://nominal.lighting/schemas/nomf/v0.3.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Copyright (c) 2026 Nominal Lighting. All rights reserved. License information: https://nominal.lighting/legal/specification-license",
+  "x-nominal-license-url": "https://nominal.lighting/legal/specification-license",
   "title": "nomfFamilyTemplate-v0.3",
   "type": "object",
   "required": [
