@@ -4,9 +4,9 @@ Public agent instructions and the [Nominal Lighting](https://nominal.lighting) r
 
 **Remote MCP:** https://nominal.lighting/mcp/public
 
-**Live NOMF v0.3 JSON Schema:** https://nominal.lighting/schemas/nomf/v0.3.json
+**Live NOMF v0.6 JSON Schema:** https://nominal.lighting/schemas/nomf/v0.6.json
 
-Agents constructing full NOMFs should call the `get_nomf_schema` tool or read `nominal://schema/nomf/v0.3` for the current schema. These retrieve the live source, not a copy packaged with the skill.
+Agents constructing full NOMFs should call the `get_nomf_schema` tool or read `nominal://schema/nomf/v0.6` for the current schema. These retrieve the live source, not a copy packaged with the skill.
 
 ## Claude / Cowork / Claude Desktop
 
@@ -25,7 +25,7 @@ Installation requires user approval. No special AI version of a bundle link is n
 
 ## Technical behavior
 
-For an existing bundle, use `get_bundle_outline` first, `get_fixture_fact` for narrow technical claims, and `get_fixture_assets` for linked documents. Leave unknown values unknown. Before generating complete NOMFs, retrieve the live schema; source-backed contributions are subject to separate verification. Publishing new bundles requires user approval; existing shared codes do not provide edit authority.
+For an existing bundle, use `get_bundle_outline` first, `get_fixture_fact` for narrow technical claims, and `get_fixture_assets` for linked documents. Leave unknown values unknown. Before generating complete NOMFs, retrieve the live schema; source-backed contributions are subject to separate verification. Publishing new bundles requires user approval; six-character public BOM codes permit reading and editing without transferring ownership.
 
 
 **NOMF proprietary specification license:** https://nominal.lighting/legal/specification-license
