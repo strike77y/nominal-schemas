@@ -1,0 +1,1543 @@
+{
+  "$id": "https://nominal.lighting/schemas/nomf/v0.6.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Copyright (c) 2026 Nominal Lighting. All rights reserved. License information: https://nominal.lighting/legal/specification-license",
+  "x-nominal-license-url": "https://nominal.lighting/legal/specification-license",
+  "x-nominal-license-id": "NPSIL-1.0",
+  "title": "nomfFamilyTemplate-v0.6",
+  "type": "object",
+  "required": [
+    "manufacturer",
+    "product_family",
+    "family_slug",
+    "category",
+    "physical_properties",
+    "ordering_code",
+    "performance_model"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "0.3",
+        "0.6"
+      ],
+      "description": "Schema version of the record. Optional for older NOMFs; the compiler emits 0.6. Records at 0.3 remain valid."
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Stable Nominal knowledge product UUID, when compiled through the contribution ledger."
+    },
+    "nomf_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "manufacturer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "brand": {
+      "type": "string"
+    },
+    "product_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model_series": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "family_slug": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "Public-facing product description shown in the fixture Overview tile. 1-3 concise, factual sentences about the luminaire: applications, architectural character, distinctive manufacturer-supported features. No project/client context, fixture tags, verification status, ordering-code or token mechanics, or unsupported marketing claims."
+    },
+    "notable_features": {
+      "type": [
+        "array",
+        "string",
+        "object"
+      ],
+      "description": "Manufacturer-sourced qualitative characteristics."
+    },
+    "website": {
+      "type": "string",
+      "format": "uri"
+    },
+    "hero_image": {
+      "type": "string",
+      "format": "uri"
+    },
+    "doc_urls": {
+      "type": "object",
+      "properties": {
+        "cutsheet_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "catalog_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "bim_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "ies_file_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "install_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "photometric_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "physical_properties": {
+      "type": "object",
+      "properties": {
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "nominal": {
+              "type": "object",
+              "description": "Aperture size, cylinder diameter, or fixture body height only.",
+              "properties": {
+                "aperture_size": {
+                  "type": "number"
+                },
+                "diameter": {
+                  "type": "number"
+                },
+                "body_height_only": {
+                  "type": "number"
+                },
+                "shape_aspect": {
+                  "type": "string"
+                },
+                "available_lengths_mm": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "cutout": {
+              "type": "object",
+              "properties": {
+                "dimensions": {
+                  "type": "string"
+                },
+                "is_circular": {
+                  "type": "boolean"
+                },
+                "diameter": {
+                  "type": "number"
+                }
+              }
+            },
+            "mounting_accessories": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "option_name": {
+                    "type": "string"
+                  },
+                  "size_value": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "clearance_requirements": {
+              "type": "string"
+            },
+            "max_run_length": {
+              "type": "number"
+            },
+            "profile": {
+              "type": "object",
+              "description": "Main fixture body cross-section only. No run lengths, no accessories.",
+              "properties": {
+                "width": {
+                  "type": "number"
+                },
+                "height": {
+                  "type": "number"
+                },
+                "diameter": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "string",
+                  "default": "inches"
+                }
+              }
+            },
+            "overall": {
+              "type": "object",
+              "description": "Overall fixture envelope including length. Complements dimensions.profile (cross-section only).",
+              "properties": {
+                "length": {
+                  "type": "number"
+                },
+                "width": {
+                  "type": "number"
+                },
+                "height": {
+                  "type": "number"
+                },
+                "diameter": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "string",
+                  "default": "inches"
+                }
+              }
+            }
+          }
+        },
+        "shape": {
+          "type": "string",
+          "enum": [
+            "round",
+            "square",
+            "rectangular",
+            "linear",
+            "hexagonal",
+            "triangular",
+            "oval",
+            "cylindrical",
+            "conical",
+            "spherical",
+            "custom"
+          ]
+        },
+        "weight": {
+          "type": "object",
+          "description": "Use value+unit for single weight, values[] for multiple (e.g. per-length variants).",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string",
+              "default": "lbs"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "condition": {
+                    "type": "string",
+                    "description": "e.g. 'for 4 ft section'"
+                  }
+                },
+                "required": [
+                  "value",
+                  "unit"
+                ]
+              }
+            }
+          }
+        },
+        "mounting_type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "recessed",
+              "surface",
+              "pendant",
+              "wall_mount",
+              "track",
+              "monopoint",
+              "pole",
+              "bollard"
+            ]
+          }
+        },
+        "environment_rating": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "dry",
+              "damp",
+              "wet",
+              "sauna",
+              "shower",
+              "deadfront",
+              "steam_room",
+              "natatorium",
+              "marine_grade"
+            ]
+          }
+        },
+        "ip_rating": {
+          "type": "string",
+          "pattern": "^IP[0-9]{2}$"
+        },
+        "ik_rating": {
+          "type": "string",
+          "pattern": "^IK[0-9]{2}$"
+        },
+        "vibration_rating": {
+          "type": "string",
+          "description": "Seismic/vibration certification e.g. 3GV, 5G.",
+          "pattern": "^\\d+(\\.\\d+)?G[V]?$"
+        },
+        "operating_temp_range": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string",
+              "enum": [
+                "C",
+                "F"
+              ],
+              "default": "C"
+            }
+          },
+          "additionalProperties": false
+        },
+        "plenum_rating": {
+          "type": "string",
+          "enum": [
+            "non_ic",
+            "ic_rated",
+            "chicago_plenum",
+            "not_applicable"
+          ]
+        },
+        "longevity_data": {
+          "type": "object",
+          "properties": {
+            "standards_compliance": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "TM-21-11",
+                  "TM-21-19",
+                  "LM-70",
+                  "LM-80"
+                ]
+              }
+            },
+            "projections": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "l_rating",
+                  "hours"
+                ],
+                "properties": {
+                  "ambient_temp_c": {
+                    "type": "integer",
+                    "description": "Test ambient temperature in Celsius. Optional — omit when not published."
+                  },
+                  "l_rating": {
+                    "type": "integer"
+                  },
+                  "hours": {
+                    "type": "integer"
+                  },
+                  "is_reported": {
+                    "type": "boolean"
+                  },
+                  "symbol": {
+                    "type": "string",
+                    "enum": [
+                      ">",
+                      "=",
+                      "<"
+                    ],
+                    "default": ">"
+                  }
+                }
+              }
+            },
+            "interpolation_supported": {
+              "type": "boolean",
+              "default": false
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "materials": {
+      "description": "Main fixture body materials keyed by component role. Structured object is the documented form; string/array forms are legacy (v0.3) and deprecated.",
+      "anyOf": [
+        {
+          "type": "object",
+          "description": "Main fixture body materials keyed by component role.",
+          "properties": {
+            "housing": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "lens": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "end_cap": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "reflector": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "yoke": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "mount": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "hardware": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "joiner": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "flange": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "internal": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "wire": {
+              "$ref": "#/$defs/materialSpec"
+            },
+            "gasket": {
+              "$ref": "#/$defs/materialSpec"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": [
+            "string",
+            "array"
+          ]
+        }
+      ]
+    },
+    "ordering_code": {
+      "type": "object",
+      "required": [
+        "pattern",
+        "tokens"
+      ],
+      "properties": {
+        "pattern": {
+          "type": "string"
+        },
+        "separator": {
+          "type": "string",
+          "default": "-"
+        },
+        "tokens": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "codes"
+            ],
+            "properties": {
+              "required": {
+                "type": "boolean",
+                "default": true
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "fixed",
+                  "selectable",
+                  "tunable",
+                  "warm_dim",
+                  "list",
+                  "freeform",
+                  "numeric",
+                  "parametric"
+                ],
+                "default": "fixed",
+                "description": "Use freeform with input_hint for new records; numeric and parametric are supported legacy explicit-encoding forms."
+              },
+              "codes": {
+                "type": "object",
+                "minProperties": 0,
+                "additionalProperties": {
+                  "type": [
+                    "string",
+                    "number",
+                    "object",
+                    "boolean",
+                    "null"
+                  ],
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "constraint_note": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Codes are native manufacturer ordering values; a blank code may be a valid default, not an absent option."
+              },
+              "aliases": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "default": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "input_hint": {
+                "type": "object",
+                "description": "UI hint for freeform tokens — rendered as a number or text input.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "number",
+                      "integer",
+                      "string"
+                    ],
+                    "description": "Input control type"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "description": "Display unit label e.g. ft, lm, lm/ft"
+                  },
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "step": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "code_format": {
+                    "type": "object",
+                    "properties": {
+                      "prefix": {
+                        "type": "string"
+                      },
+                      "suffix": {
+                        "type": "string"
+                      },
+                      "template": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 4
+                      },
+                      "width": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 12
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "orderable": {
+                    "type": "boolean",
+                    "description": "True only for manufacturer-documented encoding."
+                  },
+                  "rules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "when": {
+                          "$ref": "#/$defs/selector"
+                        },
+                        "min": {
+                          "type": "number"
+                        },
+                        "max": {
+                          "type": "number"
+                        },
+                        "step": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              "label": {
+                "type": "string",
+                "description": "Display name of the ordering field."
+              },
+              "input": {
+                "$ref": "#/$defs/nativeNumericInput",
+                "description": "Legacy explicit numeric native ordering grammar."
+              }
+            },
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "codes": {
+                      "maxProperties": 0
+                    }
+                  },
+                  "required": [
+                    "codes"
+                  ]
+                },
+                "then": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "input"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "input_hint"
+                      ],
+                      "properties": {
+                        "input_hint": {
+                          "required": [
+                            "code_format",
+                            "min",
+                            "max",
+                            "unit"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "accessories": {
+      "type": "object",
+      "description": "Separately-orderable accessories keyed by base model code.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Short human-readable name."
+          },
+          "description": {
+            "type": "string"
+          },
+          "ordering_code": {
+            "type": "object",
+            "description": "Same structure as the main ordering_code.",
+            "properties": {
+              "pattern": {
+                "type": "string"
+              },
+              "separator": {
+                "type": "string",
+                "default": "-"
+              },
+              "tokens": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "required": [
+                    "codes"
+                  ],
+                  "properties": {
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "mode": {
+                      "type": "string"
+                    },
+                    "codes": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "cct_mode": {
+      "type": "string",
+      "enum": [
+        "fixed",
+        "selectable",
+        "tunable",
+        "warm_dim"
+      ],
+      "default": "fixed"
+    },
+    "cct": {
+      "type": "string"
+    },
+    "performance_model": {
+      "type": "object",
+      "required": [
+        "by_lumen_pkg"
+      ],
+      "properties": {
+        "base_point": {
+          "type": "object",
+          "properties": {
+            "cct": {
+              "type": "string"
+            },
+            "cri": {
+              "type": "integer"
+            },
+            "lumens_nominal": {
+              "type": "number",
+              "minimum": 0
+            },
+            "wattage_input": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "reference_only": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "by_lumen_pkg": {
+          "type": "object",
+          "minProperties": 0,
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "lumens_nominal",
+              "wattage_input"
+            ],
+            "properties": {
+              "lumens_nominal": {
+                "type": "number"
+              },
+              "lumens_delivered": {
+                "type": "number",
+                "description": "Delivered lumens after all optics and losses."
+              },
+              "wattage_input": {
+                "type": "number"
+              },
+              "efficacy_lpw": {
+                "type": "number",
+                "description": "lm/W — calculated or explicitly stated.",
+                "minimum": 0
+              },
+              "condition": {
+                "type": "string",
+                "description": "e.g. fixture length or optic qualifier."
+              },
+              "ies_file_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "source_ref": {
+                "type": "string"
+              },
+              "test_conditions": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "record_type": {
+                "type": "string",
+                "enum": [
+                  "measured",
+                  "manufacturer_declared",
+                  "nominal",
+                  "computed"
+                ]
+              },
+              "reference_only": {
+                "type": "boolean"
+              },
+              "reference_conditions": {
+                "type": [
+                  "object",
+                  "string"
+                ]
+              },
+              "selections": {
+                "$ref": "#/$defs/selector"
+              },
+              "selector": {
+                "$ref": "#/$defs/selector"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": "Published or manufacturer-declared output packages. An empty object denotes unavailable performance, never zero output."
+        },
+        "by_cct": {
+          "type": "object",
+          "properties": {
+            "points": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "lm_mult": {
+                    "type": "number"
+                  },
+                  "w_mult": {
+                    "type": "number"
+                  },
+                  "lumens_nominal": {
+                    "type": "number"
+                  },
+                  "wattage_input": {
+                    "type": "number"
+                  },
+                  "ies_file_url": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "interpolation": {
+              "type": "string",
+              "enum": [
+                "none",
+                "linear"
+              ],
+              "default": "linear",
+              "description": "linear: configurator interpolates between published CCT points to unpublished CCTs. none: published points only. Pipeline should write this explicitly; production v0.3 defaulted to none."
+            }
+          },
+          "additionalProperties": false
+        },
+        "option_deltas": {
+          "type": "object",
+          "description": "Keyed by token:value e.g. 'cri:90', 'finish:BR'. Applied on top of by_lumen_pkg.",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "lm_mult": {
+                "type": "number"
+              },
+              "w_mult": {
+                "type": "number"
+              },
+              "lm_add": {
+                "type": "number"
+              },
+              "w_add": {
+                "type": "number"
+              },
+              "dim_floor": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "notes": {
+          "type": "string",
+          "description": "Free-text note about the performance model — e.g. 'Specified as W/m, see app_directives.power_per_meter'."
+        },
+        "color_quality": {
+          "type": "object",
+          "description": "Color quality metrics — TM-30 (Rf/Rg), CRI, R9, SDCM, Duv, UGR, hue shift. Raw values only; display derivatives computed at interface layer.",
+          "properties": {
+            "rf": {
+              "type": "number",
+              "description": "TM-30 Fidelity Index (0-100+)"
+            },
+            "rg": {
+              "type": "number",
+              "description": "TM-30 Gamut Index (0-130+)"
+            },
+            "r9": {
+              "type": "number",
+              "description": "CIE R9 deep red rendering score"
+            },
+            "cri": {
+              "type": "number",
+              "description": "CIE Ra general color rendering index"
+            },
+            "sdcm": {
+              "type": "number",
+              "description": "Standard deviation of color matching (MacAdam ellipses)"
+            },
+            "macadam_steps": {
+              "type": "number",
+              "description": "MacAdam steps — equivalent to SDCM"
+            },
+            "duv": {
+              "type": "number",
+              "description": "Distance from blackbody locus"
+            },
+            "ugr": {
+              "type": "number",
+              "description": "Unified Glare Rating"
+            },
+            "hue_shift_angle": {
+              "type": "number",
+              "description": "TM-30 hue shift angle in degrees"
+            },
+            "hue_shift_magnitude": {
+              "type": "number",
+              "description": "TM-30 hue shift magnitude"
+            },
+            "hue_shift_direction": {
+              "type": "string",
+              "description": "warm or cool hue shift direction"
+            }
+          },
+          "additionalProperties": false
+        },
+        "lumen_code_map": {
+          "type": "object",
+          "description": "Explicit correspondence between native ordering token codes and performance records. Do not infer numeric code equivalence.",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "reference_points": {
+          "type": "object",
+          "description": "Evidence-scoped measurement rows; not universal configured performance.",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "reference_only": {
+                "type": "boolean"
+              },
+              "reference_conditions": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "source_claim_id": {
+                "type": "string"
+              },
+              "lumens_nominal": {
+                "type": "number",
+                "minimum": 0
+              },
+              "wattage_input": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "capability_envelope": {
+      "type": "object",
+      "properties": {
+        "tunable_lumen_range": {
+          "type": "object",
+          "properties": {
+            "min_lm": {
+              "type": "number"
+            },
+            "max_lm": {
+              "type": "number"
+            },
+            "step": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "driver_options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dimming_floor_capabilities": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "beam_options_deg": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "factory_mod_classes_supported": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mod_cost_multipliers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "mod_leadtime_adder_days": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "max_lumen_output": {
+          "type": "object",
+          "description": "Maximum lumen output across all configurations.",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string",
+              "default": "lm"
+            },
+            "condition": {
+              "type": "string",
+              "description": "e.g. highest optic, 120V"
+            }
+          },
+          "additionalProperties": false
+        },
+        "max_intensity": {
+          "type": "object",
+          "description": "Maximum beam intensity (candela) across all configurations.",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string",
+              "default": "cd"
+            },
+            "condition": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/nativeNumericInput"
+          },
+          "description": "Legacy manufacturer-defined numeric ordering parameters."
+        },
+        "parametric_inputs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/nativeNumericInput"
+          },
+          "description": "Legacy manufacturer-defined numeric ordering parameters."
+        }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "block",
+              "warn"
+            ],
+            "default": "block"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "requires",
+              "excludes",
+              "mutex",
+              "one_of",
+              "implies",
+              "depends_on_value_range",
+              "custom"
+            ]
+          },
+          "if": {
+            "$ref": "#/$defs/selector"
+          },
+          "then": {
+            "$ref": "#/$defs/selector"
+          },
+          "a": {
+            "$ref": "#/$defs/selector"
+          },
+          "b": {
+            "$ref": "#/$defs/selector"
+          },
+          "group": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "For mutex and one_of: members are token names or TOKEN:CODE. Count only selected nonblank members."
+          },
+          "range": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              },
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              },
+              "inclusive": {
+                "type": "boolean",
+                "default": true
+              }
+            },
+            "additionalProperties": false,
+            "description": "For depends_on_value_range: selected numeric value must fall within this range when the trigger matches.",
+            "required": [
+              "token"
+            ]
+          },
+          "predicate": {
+            "type": "string",
+            "description": "Free-text subject/condition for plain-text constraints."
+          },
+          "message": {
+            "type": "string"
+          },
+          "with": {
+            "$ref": "#/$defs/selector",
+            "description": "Additional selector ANDed with if/a."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cross_domain_dependencies": {
+      "type": [
+        "array",
+        "object",
+        "string"
+      ]
+    },
+    "listings_defaults": {
+      "type": "array",
+      "description": "Certifications and listings. Structured objects are the documented form; plain strings are legacy (v0.3) and deprecated.",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "body": {
+                "type": "string"
+              },
+              "standard": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "listed",
+                  "certified",
+                  "compliant",
+                  "rated",
+                  "approved",
+                  "qualified",
+                  "tested"
+                ]
+              },
+              "scope": {
+                "type": "string"
+              },
+              "region": {
+                "type": "string"
+              },
+              "condition": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "body"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "warranty": {
+      "description": "Structured {years,type} is the documented form; string/number are legacy (v0.3) and deprecated.",
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "years": {
+              "type": "integer"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      ]
+    },
+    "nomviewer_asset_selections": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "document_revision": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "knowledge_manifest": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "accepted_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "compiler": {
+          "type": "string"
+        },
+        "compiled_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_claims_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "app_directives": {
+      "type": "object",
+      "description": "Flexible key-value store. Known namespaces documented below; unknown keys are allowed.",
+      "properties": {
+        "manufacturer_legal_name": {
+          "type": "string"
+        },
+        "vibration_rating": {
+          "type": "object",
+          "properties": {
+            "standard": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "raw_ip_rating": {
+          "type": "string",
+          "description": "Original IP value when it failed ^IP[0-9]{2}$ validation."
+        },
+        "power_per_meter": {
+          "type": "object",
+          "description": "W/m data for length-specified fixtures.",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "last_updated_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "provenance": {
+          "type": "string"
+        },
+        "pipeline_version": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "compilation": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "origin": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Assigned by Nominal; not an author assertion."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "provisional",
+        "verified",
+        "unclassified"
+      ],
+      "readOnly": true,
+      "description": "Assigned by Nominal; not an author assertion."
+    },
+    "preview_only": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Assigned by Nominal; not an author assertion."
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "selector": {
+      "type": "object",
+      "description": "Match on token values. Arrays mean OR semantics.",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "materialSpec": {
+      "type": "object",
+      "properties": {
+        "material": {
+          "type": "string",
+          "description": "Base material: aluminum, steel, polycarbonate, acrylic, glass, wool, felt, wood, foam, etc."
+        },
+        "grade": {
+          "type": "string",
+          "description": "Alloy, temper, or qualifier: 6063-T6, 304, cold_rolled, fsc_certified, reclaimed, etc."
+        },
+        "method": {
+          "type": "string",
+          "description": "Fabrication: extruded, die_cast, die_formed, injection_molded, rolled, stamped, woven, 3d_printed, powder_coated, anodized, etc."
+        },
+        "thickness_mm": {
+          "type": "number",
+          "description": "Wall or sheet thickness in mm."
+        },
+        "gauge": {
+          "type": "integer",
+          "description": "Sheet metal or wire gauge."
+        },
+        "weight_spec": {
+          "type": "string",
+          "description": "Weight per area for textile/foam components e.g. 16oz."
+        }
+      },
+      "additionalProperties": false
+    },
+    "nativeNumericInput": {
+      "type": "object",
+      "properties": {
+        "unit": {
+          "type": "string",
+          "enum": [
+            "in",
+            "ft",
+            "mm",
+            "cm",
+            "m",
+            "lm",
+            "W"
+          ]
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "step": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "code_format": {
+          "type": "object",
+          "properties": {
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string"
+            },
+            "template": {
+              "type": "string"
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "width": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 12
+            }
+          },
+          "additionalProperties": false
+        },
+        "orderable": {
+          "type": "boolean"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "when": {
+                "$ref": "#/$defs/selector"
+              },
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              },
+              "step": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "unit",
+        "min",
+        "max",
+        "code_format"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
